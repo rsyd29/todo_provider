@@ -44,4 +44,20 @@ class TodoList with ChangeNotifier {
     _state = _state.copyWith(todos: newTodos);
     notifyListeners();
   }
+
+  void editTodo(String id, String todoDesc) {
+    final newTodos = _state.todos.map((Todo todo) {
+      if (todo.id == id) {
+        return Todo(
+          id: id,
+          desc: todoDesc,
+          compeleted: todo.compeleted,
+        );
+      }
+      return todo;
+    }).toList();
+
+    _state = _state.copyWith(todos: newTodos);
+    notifyListeners();
+  }
 }
