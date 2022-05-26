@@ -51,7 +51,7 @@ class TodoList with ChangeNotifier {
         return Todo(
           id: id,
           desc: todoDesc,
-          compeleted: todo.compeleted,
+          completed: todo.completed,
         );
       }
       return todo;
@@ -67,7 +67,7 @@ class TodoList with ChangeNotifier {
         return Todo(
           id: id,
           desc: todo.desc,
-          compeleted: !todo.compeleted,
+          completed: !todo.completed,
         );
       }
       return todo;
