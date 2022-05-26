@@ -244,7 +244,9 @@ class _TodoItemState extends State<TodoItem> {
     return ListTile(
       leading: Checkbox(
         value: widget.todo.completed,
-        onChanged: (bool? checked) {},
+        onChanged: (bool? checked) {
+          context.read<TodoList>().toggleTodo(widget.todo.id);
+        },
       ),
       title: Text(widget.todo.desc),
     );
