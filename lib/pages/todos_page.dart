@@ -193,6 +193,31 @@ class ShowTodos extends StatelessWidget {
           key: ValueKey(todos[index].id),
           background: showBackground(0),
           secondaryBackground: showBackground(1),
+          onDismissed: (_) {
+            context.read<TodoList>().removeTodo(todos[index]);
+          },
+          confirmDismiss: (_) {
+            return showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text('Are you sure?'),
+                  content: const Text('Do you really want to delete?'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, false),
+                      child: const Text('NO'),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, true),
+                      child: const Text('YES'),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
           child: TodoItem(
             todo: todos[index],
           ),
