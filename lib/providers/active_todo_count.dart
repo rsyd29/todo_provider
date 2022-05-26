@@ -35,12 +35,14 @@ class ActiveTodoCount with ChangeNotifier {
   ActiveTodoCountState get state => _state;
 
   void update(TodoList todoList) {
+    debugPrint(todoList.state.toString());
     final int newActiveTodoCount = todoList.state.todos
         .where((Todo todo) => !todo.completed)
         .toList()
         .length;
 
     _state = _state.copyWith(activeTodoCount: newActiveTodoCount);
+    debugPrint(state.toString());
     notifyListeners();
   }
 }
