@@ -193,12 +193,35 @@ class ShowTodos extends StatelessWidget {
           key: ValueKey(todos[index].id),
           background: showBackground(0),
           secondaryBackground: showBackground(1),
-          child: Text(
-            todos[index].desc,
-            style: const TextStyle(fontSize: 20.0),
+          child: TodoItem(
+            todo: todos[index],
           ),
         );
       },
+    );
+  }
+}
+
+class TodoItem extends StatefulWidget {
+  final Todo todo;
+  const TodoItem({
+    Key? key,
+    required this.todo,
+  }) : super(key: key);
+
+  @override
+  State<TodoItem> createState() => _TodoItemState();
+}
+
+class _TodoItemState extends State<TodoItem> {
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: Checkbox(
+        value: widget.todo.completed,
+        onChanged: (bool? checked) {},
+      ),
+      title: Text(widget.todo.desc),
     );
   }
 }
