@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_provider/providers/active_todo_count.dart';
 import 'package:todo_provider/providers/todo_filter.dart';
 import 'package:todo_provider/providers/todo_search.dart';
+import 'package:todo_provider/utils/debounce.dart';
 
 import '../models/todo_model.dart';
 import '../providers/filtered_todos.dart';
@@ -27,13 +28,13 @@ class _TodosPageState extends State<TodosPage> {
               vertical: 40.0,
             ),
             child: Column(
-              children: const [
-                TodoHeader(),
-                CreateTodo(),
-                SizedBox(height: 20.0),
+              children: [
+                const TodoHeader(),
+                const CreateTodo(),
+                const SizedBox(height: 20.0),
                 SearchAndFilterTodo(),
-                SizedBox(height: 10.0),
-                ShowTodos(),
+                const SizedBox(height: 10.0),
+                const ShowTodos(),
               ],
             ),
           ),
@@ -101,7 +102,9 @@ class _CreateTodoState extends State<CreateTodo> {
 }
 
 class SearchAndFilterTodo extends StatelessWidget {
-  const SearchAndFilterTodo({Key? key}) : super(key: key);
+  SearchAndFilterTodo({Key? key}) : super(key: key);
+
+  final debounce = Debounce(milliseconds: 1000);
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +119,9 @@ class SearchAndFilterTodo extends StatelessWidget {
           ),
           onChanged: (String? newSearchTerm) {
             if (newSearchTerm != null) {
-              context.read<TodoSearch>().setSearchTerm(newSearchTerm);
+              debounce.run(() {
+                context.read<TodoSearch>().setSearchTerm(newSearchTerm);
+              });
             }
           },
         ),
